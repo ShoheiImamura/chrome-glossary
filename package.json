@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "local": "cp -fr ./dist /mnt/c/Users/s3ima/Documents/workspace/chrome-extension-sample"
+    "local": "cp -fr ./dist /mnt/c/Users/s3ima/Documents/workspace/chrome-extension-sample",
+    "b": "pnpm build && pnpm local"
   },
   "dependencies": {
     "vue": "^3.3.4"
