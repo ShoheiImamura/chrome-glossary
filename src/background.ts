@@ -1,29 +1,28 @@
-// タブがアクティブになったとき
-chrome.tabs.onActivated.addListener(async ({ tabId, windowId }) => {
-  const tab = await chrome.tabs.get(tabId);
-  console.table({
-    onActivated: {
-      tabId: tabId,
-      windowId: windowId,
-      "tab.url": tab?.url,
-      "tab.active": tab?.active,
-      "tab.status": tab?.status,
-      "location.href": location.href,
-    },
-  });
+chrome.contextMenus.create({
+  id: "addToGlossary",
+  title: "用語集に「%s」を追加",
+  type: "normal",
+  contexts: ["selection"],
 });
 
-// タブが更新されたとき
-chrome.tabs.onUpdated.addListener((tabId, info, tab) => {
-  console.table({
-    onUpdated: {
-      tabId: tabId,
-      windowId: tab?.windowId,
-      "tab.url": tab?.url,
-      "tab.active": tab?.active,
-      "tab.status": tab?.status,
-      "location.href": location.href,
-    },
-  });
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  console.log("onClicked")
+  if (info.menuItemId !== "addToGlossary") {
+    console.log("not match");
+    return;
+  }
   console.log(info);
+  console.log(tab);
+  // フォームを表示する
+  // メッセージを送信する
+  if (!tab?.id) {
+    return;
+  }
+  // if (info.menuItemId === "registerTerm") {
+  // content.js へメッセージを送信
+  chrome.tabs.sendMessage(tab.id, {
+    action: "openForm",
+    selectedText: info.selectionText,
+  });
+  // }
 });

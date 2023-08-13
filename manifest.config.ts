@@ -5,7 +5,14 @@ export const manifest = defineManifest({
   name: "chrome-extension-sample",
   description: "sample",
   version: "0.0.1",
-  permissions: ["tabs"],
+  permissions: [
+    "tabs",
+    "contextMenus",
+    "scripting",
+    "activeTab",
+    "runtime",
+    "messagePassing",
+  ],
   action: {
     default_popup: "index.html",
   },
@@ -15,8 +22,8 @@ export const manifest = defineManifest({
   },
   content_scripts: [
     {
-      matches: ["<all_urls>"],
-      js: ["src/scripts/addOutline"],
+      matches: ["https://*/*", "http://*/*"],
+      js: ["src/scripts/showTerms", "src/scripts/registerTerm"],
     },
   ],
 });
